@@ -101,7 +101,7 @@ library("TFDEA")
   results <- TFDEA(x, y, z, 2003, rts="vrs", orientation="output", mode="dynamic")
 
   
-  pander(results$dmu_date_for, "Examine what dates are forecast for DMU D and G")
+  pander(results$dmu_date_for, "Examine what dates are forecasted for DMU D and G")
 
 ```
 
