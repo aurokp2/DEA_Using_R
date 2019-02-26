@@ -53,11 +53,58 @@ source('Helperfiles.R')
 
 ## How TFDEA Works
 
-To Be Added
+
+$$
+\begin{aligned}
+      \text{For k = 1,...,n} \\
+           & \text {For}\ t_{f} = t_{k}\ to\  T \\
+          & \begin{aligned}
+              && \max_{\phi^{t_f}_{k}, \lambda} \  \phi^{t_f}_{k}\\
+              && \text{s.t.} \sum_{j=1}^{n} y_{r,j} \lambda_{j} \geq \phi^{t_f}_{k} y_{r, k}, r = 1,...,s \\
+              && \sum_{j=1}^{n} x_{i, j} \lambda_{j} \leq x_{i, k}, i = 1,...,m \\
+              && \sum_{j=1}^{n} \lambda_{j} = 1 \\
+              && \lambda_{j} = 0, \forall \ j, \text{such that} \ t_{j} \ > t_{f} \\
+              && \lambda \geq 0 \\
+              && \gamma_{k}^{t_f} = \bigg( \phi^{t_f}_{k} \bigg)^{ \frac{1}{t_f - t_k}} \forall \ k, \text{such that} \phi_{k}^{t_k} \leq 1, \phi_{k}^{t_f} > 1 \\
+            \end{aligned} \\
+          & \text{Next} \ t_f \\
+        \text{Next k} \
+\end{aligned}
+$$
 
 ## A Two-Dimensional Example of TFDEA
 
-To Be Added
+```{r Flash Drive}
+library("TFDEA")
+
+# Example from Inman (2004) p. 93-104, predicting flash drive introduction dates
+
+  drive <- c("A", "B", "C", "D", "E", "F", "G")
+
+  x           <- data.frame(c(16, 14, 8, 25, 40, 30, 40))
+  rownames(x) <- drive
+  colnames(x) <- c("Cost")
+
+  y           <- data.frame(c(16, 32, 32, 128, 32, 64, 256))
+  rownames(y) <- drive
+  colnames(y) <- c("Capacity")
+
+
+  z           <- data.frame(c(2001, 2002, 2003, 2004, 2001, 2002, 2004))
+  rownames(z) <- drive
+  colnames(z) <- c("Date_Intro")
+  
+  
+  pander(cbind(x, y, z), "Flash Drive Data")
+
+  # Calc intro date for products using forecast year 2003
+  results <- TFDEA(x, y, z, 2003, rts="vrs", orientation="output", mode="dynamic")
+
+  
+  pander(results$dmu_date_for, "Examine what dates are forecast for DMU D and G")
+
+```
+
 
 ## Using TFDEA in a Complex Product
 
@@ -70,4 +117,3 @@ To Be Added
 ## Future Work
 
 To Be Added
-
